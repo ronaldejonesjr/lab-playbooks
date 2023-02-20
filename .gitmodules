@@ -1,3 +1,0 @@
-[submodule "ansible_roles"]
-	path = roles
-	url = git@github.com:ronaldejonesjr/ansible_roles
