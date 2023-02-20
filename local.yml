@@ -1,0 +1,46 @@
+---
+
+- name: "Ansible for the pulling configs"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+
+  vars:
+    seed: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      62393830373361653537363239306261396664363835306261316136396633316363376261653239
+      3939356463323239623163386661396365633036376138360a346465333830393731616331616138
+      31643761303437383338303034366130663434356165396131353130623465643838306535663932
+      6162343431336534350a376232613738373932656138666566656164303563646638396566316166
+      3934
+
+
+    rootpw: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      34623639363764343738343637643164376435386261343234303039333139366565626361633132
+      3263323630636330646630626634333238333164306437370a363939383831663566323639346166
+      61356564616239356232656164393839626332663432653063633935303861653532613437306166
+      3632383433613536640a343130646135363535366134646334303833623932663537373231353535
+      3030
+
+
+  tasks:
+
+    - name: "Gather the package facts"
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: "Update the root password"
+      ansible.builtin.user:
+        name: root
+        password: "{{ '%s' | format(rootpw) | password_hash('sha512', 'r4nd0m533d') }}"
+  
+    - name: "Pulling roles"
+      ansible.builtin.include_role: 
+        name: '{{ roleinputvar }}'
+      loop_control:
+        loop_var: roleinputvar
+      loop:
+        - Ansible-Pull
+        - STIG

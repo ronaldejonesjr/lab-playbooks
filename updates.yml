@@ -1,0 +1,9 @@
+---
+
+- name: "Update playbook"
+  hosts: localhost
+  connection: local
+  become: true
+
+  roles:
+    - Updates
