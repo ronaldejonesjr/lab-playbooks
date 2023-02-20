@@ -34,10 +34,10 @@
     - name: "Update the root password"
       ansible.builtin.user:
         name: root
-        password: "{{ '%s' | format(rootpw) | password_hash('sha512', 'r4nd0m533d') }}"
-  
+        password: "{{ '%s' | format(rootpw) | password_hash('sha512', seed | trim) }}"
+
     - name: "Pulling roles"
-      ansible.builtin.include_role: 
+      ansible.builtin.include_role:
         name: '{{ roleinputvar }}'
       loop_control:
         loop_var: roleinputvar
