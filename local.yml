@@ -1,6 +1,6 @@
 ---
 
-- name: "Ansible for the pulling configs"
+- name: "Ansible for the pulling dev configs"
   hosts: localhost
   connection: local
   gather_facts: true
@@ -24,6 +24,7 @@
       3632383433613536640a343130646135363535366134646334303833623932663537373231353535
       3030
 
+    ansible_url: "https://github.com/ronaldejonesjr/lab-playbooks.git"
 
   tasks:
 
